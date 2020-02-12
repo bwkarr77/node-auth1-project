@@ -12,8 +12,8 @@ const Users = require("../utils/userDb-model.js");
 // ================================
 //            POST
 // ================================
-// @desc    POST/CREATE new car
-// @route   POST to /api/recipes
+// @desc    POST/CREATE new user
+// @route   POST to /api/register
 exports.createUser = (req, res, next) => {
   console.log("userController.createUser");
   let user = req.body;
@@ -34,14 +34,19 @@ exports.createUser = (req, res, next) => {
 // ================================
 //            POST
 // ================================
-// @desc    POST/CREATE new car
-// @route   POST to /api/recipes
+// @desc    login with credentials
+// @route   POST to /api/login
 exports.userLogin = (req, res, next) => {
-  let { username, password } = req.body;
-  Users.findBy({ username })
+  console.log("userControllers>userLogin:", req.body);
+  const credentials = req.body;
+  Users.findByCredentials(credentials.username)
     .first()
     .then(user => {
-      if (!!user && !!bcrypt.compareSync(password, user.password)) {
+      console.log(
+        user,
+        bcrypt.compareSync(credentials.password, user.password)
+      );
+      if (user && bcrypt.compareSync(credentials.password, user.password)) {
         req.session.user = user;
         res
           .status(200) //success
@@ -49,6 +54,23 @@ exports.userLogin = (req, res, next) => {
       } else {
         res.status(401).json({ message: "Invalid Credentials" });
       }
+    })
+    .catch(err => {
+      next(err);
+    });
+};
+
+// ================================
+//            GET
+// ================================
+// @desc    GET to obtain all users
+// @route   GET to /api/users
+exports.getAllUsers = (req, res, next) => {
+  Users.find()
+    .then(users => {
+      res
+        .status(200) //success
+        .json(users);
     })
     .catch(err => {
       next(err);

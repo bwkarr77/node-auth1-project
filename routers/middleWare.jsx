@@ -22,3 +22,14 @@ const createUnknown = name => {
     name = "still need data...";
   }
 };
+
+exports.restricted = () => {
+  return (req, res, next) => {
+    if (!req.session || !req.session.user) {
+      return res.status(401).json({
+        message: "Invalid Credentials"
+      });
+    }
+    next();
+  };
+};

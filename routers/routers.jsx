@@ -1,5 +1,6 @@
 const router = require("express").Router();
 console.log("routers.jsx");
+const { restricted } = require("./middleWare.jsx");
 
 const {
   getAll,
@@ -9,7 +10,7 @@ const {
   updateIndividual
 } = require("./controllers.jsx");
 
-const { createUser, userLogin } = require("./userControllers.jsx");
+const { createUser, userLogin, getAllUsers } = require("./userControllers.jsx");
 
 const {
   getShoppingList,
@@ -17,7 +18,7 @@ const {
   getRecipesByIngredient
 } = require("./recipeController.jsx");
 
-router.route("/").get(getAll);
+router.route("/users").get(getAllUsers, restricted());
 
 router.route("/register").post(createUser);
 

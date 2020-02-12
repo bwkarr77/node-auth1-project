@@ -17,6 +17,19 @@ function findById(id) {
     .first();
 }
 
+function find() {
+  return db("users").select("id", "username");
+}
+
+function findByCredentials(credentials) {
+  return db("users")
+    .where(credentials)
+    .select("id", "username", "password");
+}
+
 module.exports = {
-  add
+  add,
+  findById,
+  find,
+  findByCredentials
 };

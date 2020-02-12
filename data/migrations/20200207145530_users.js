@@ -1,7 +1,7 @@
 exports.up = function(knex) {
   return knex.schema.createTable("users", users => {
     console.log("migration>users.js:", users);
-    users.increments();
+    users.increments("id");
     users
       .string("username", 200)
       .notNullable()

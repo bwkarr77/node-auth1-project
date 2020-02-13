@@ -38,7 +38,7 @@ exports.createUser = (req, res, next) => {
 // @route   POST to /api/login
 exports.userLogin = (req, res, next) => {
   console.log("userControllers>userLogin:", req.body);
-  const credentials = req.body;
+  let credentials = req.body;
   Users.findByCredentials(credentials.username)
     .first()
     .then(user => {
@@ -66,6 +66,7 @@ exports.userLogin = (req, res, next) => {
 // @desc    GET to obtain all users
 // @route   GET to /api/users
 exports.getAllUsers = (req, res, next) => {
+  console.log(req.session);
   Users.find()
     .then(users => {
       res
@@ -75,4 +76,22 @@ exports.getAllUsers = (req, res, next) => {
     .catch(err => {
       next(err);
     });
+};
+
+// ================================
+//            GET
+// ================================
+// @desc    GET to logout current user
+// @route   GET to /api/logout
+exports.logout = (req, res, next) => {
+  console.log(req.session);
+  req.session.destroy(err => {
+    if (err) {
+      next(err);
+    } else {
+      res
+        .status(202) //success (?)
+        .json({ message: "successful logout" });
+    }
+  });
 };

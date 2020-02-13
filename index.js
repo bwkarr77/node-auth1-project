@@ -1,4 +1,4 @@
-const server = require("./server.js");
+const server = require("./api/apiServer.js");
 
 const PORT = process.env.PORT || 5678;
 

@@ -622,6 +622,11 @@ connect-redis@^3.3.0:
     debug "^4.1.1"
     redis "^2.8.0"
 
+connect-session-knex@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/connect-session-knex/-/connect-session-knex-1.5.0.tgz#78ff3d1df6c4e5b0e74d4f8ccf503926272958aa"
+  integrity sha512-hJsb489Aau9PVauVHJpO3O4yP3xykGyh/HqmTPGpWEE44qVvjW91fFOd85iRsjGIyLIvodZb671y/kiCxhpPTg==
+
 console-control-strings@^1.0.0, console-control-strings@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
@@ -1017,7 +1022,7 @@ express-data-parser@^1.2.0:
   dependencies:
     formidable "^1.0.17"
 
-express-session@^1.14.2:
+express-session@^1.14.2, express-session@^1.17.0:
   version "1.17.0"
   resolved "https://registry.yarnpkg.com/express-session/-/express-session-1.17.0.tgz#9b50dbb5e8a03c3537368138f072736150b7f9b3"
   integrity sha512-t4oX2z7uoSqATbMfsxWMbNjAL0T5zpvcJCk3Z9wnPPN7ibddhnmDZXHfEcoBMG2ojKXZoCyPMc5FbtK+G7SoDg==

@@ -3,9 +3,9 @@
 const users = require("../utils/userDb-model.js");
 const bcrypt = require("bcryptjs");
 
-module.exports = (req, res, next) => {
+exports.authorize = (req, res, next) => {
   const { username, password } = req.headers;
-  console.log("authRequiredMiddleware:", username, password);
+  console.log("authorize:", username, password);
   // validate that they exist ... we didn't have this part in class...
   if (!(username && password)) {
     res.status(401).json({ message: "invalid Inputs" });
@@ -20,7 +20,9 @@ module.exports = (req, res, next) => {
         console.log("authRequiredMiddle.then: ", password, user, boolRet);
         //
         if (user && boolRet) {
-          console.log("authRequiredMiddleware Success!!!");
+          req.session.user = user;
+          req.session.loggedin = true;
+          console.log("authRequiredMiddleware Success!!!", req.session);
           next();
         } else {
           res.status(401).json({ message: "Invalid Credentials" });
@@ -29,5 +31,16 @@ module.exports = (req, res, next) => {
       .catch(err => {
         res.status(500).json({ Errmessage: `${err}` });
       });
+  }
+};
+
+exports.restricted = (req, res, next) => {
+  console.log("restricted");
+  if (req.session.loggedin && req.session.loggedin === true) {
+    next();
+  } else {
+    res
+      .status(400) //error
+      .json({ errMessage: "Not logged in" });
   }
 };

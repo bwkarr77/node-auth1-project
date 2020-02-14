@@ -1,32 +1,13 @@
-//from instruction
-
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
-const authorize = require("./authRequiredMiddleware.jsx");
+console.log("authRouter.jsx starting....\n");
+const { authorize } = require("../auth/authRequiredMiddleware.jsx");
 
-const Users = require("../utils/userDb-model.js");
+//import controller functions
+const { createUser, userLogin } = require("../routers/userControllers.jsx");
 
-//REGISTER
-router.post("/register", (req, res) => {
-  let user = req.body;
-  // const hash = bcrypt.hashSync(user.password, 8);
-  // console.log("new user:", hash);
-  // user.password = hash;
-
-  Users.add(user)
-    .then(saved => {
-      res.status(201).json(saved);
-    })
-    .catch(error => {
-      res.status(500).json(error);
-    });
-});
-
-//LOGIN
-router.post("/login", authorize, (req, res) => {
-  console.log("login running...");
-  let { username } = req.headers;
-  res.status(200).json({ message: `Welcome ${username}!` });
-});
+//register new user
+router.route("/register").post(createUser);
+//login with username/password in the header
+router.route("/login").post(authorize, userLogin);
 
 module.exports = router;

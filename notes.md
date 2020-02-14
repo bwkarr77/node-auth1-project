@@ -14,6 +14,8 @@ $ yarn add server
 // copy cleanup.js file
 // create seed files
 
+$ yarn add express-session
+$ yarn add connect-session-knex
 
 ====================
 yarn knex migrate:rollback

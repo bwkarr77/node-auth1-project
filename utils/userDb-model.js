@@ -13,10 +13,9 @@ function findByCredentials(credentials) {
 }
 
 async function add(user) {
-  console.log("userDB-model>add(user):", user);
   user.password = await bcrypt.hash(user.password, 14);
+  console.log("userDB-model>add(user):", user);
   const [id] = await db("users").insert(user);
-  console.log(id);
   return findById(id);
 }
 

@@ -4,8 +4,7 @@ const router = require("express").Router(); // const bcrypt = require('bcryptjs'
 const Users = require("../utils/userDb-model.js"); // you by knowing your password, you can do All The Things(tm).
 const authrequired = require("../auth/authRequiredMiddleware.jsx");
 
-// router.get("/", authrequired, (req, res) => {
-router.get("/", (req, res) => {
+router.get("/", authrequired, (req, res) => {
   Users.find()
     .then(users => {
       res.json(users);
